@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function max(a,b){
+    return a>b?a:b;
+    }
+    console.log(max(5,8));
+
+    var x = 10;
+     document.onclick = function () {
+     console.log("x = ",x);
+     alert("x = "+x);
+    };
+
+    //如何避免全局污染，使用IIFE函数立即执行表达式
+    (function () {  // 开始
+     var x = 30;
+     document.onclick = function () {
+        console.log("x = ",x);
+        alert("x = "+x);
+     };
+    })();           // 结束
+
+
+     console.log("max = "+ max(2,3));
+
+
+    (function(){
+    //避免滥用全局变量
+    var x = 20;
+    console.log(x);
+    })();
+    console.log(x);
+
+
+    //条件语句
+if(x>22){
+    x+=2;
+}else{
+    console.log("x 不大于 22");
+}
+
+var xx = 234;
+if(234==xx){ 
+    console.log("相等");
+}
+
+
+console.log(a);
+if(true){
+    var a = 2;
+}
+console.log(a);
+
+console.log(b);
+if(false){//ab boolen类型为true
+    var b = 3;
+}
+console.log(b);
+
+//循环语句
+for(var i=0;i<3;i++){
+    console.log("i:",i);
+}
+console.log(i);//是否会报错，若不报错的话此时i为多少？？？？？
+//不会报错，i为3
+
+//函数定义及调用   提问：函数有几种定义方式？？？？？
+//定义函数一般是有三种方法：function语句、Function（）构造函数、定义函数直接量
+//function语句
+function max(x,y) {
+    return x>y?x:y;
+}
+console.log(max(2,3));
+//函数表达式
+var p=function(a,b){
+    console.log(a%b);
+}
+p(3,9);
+//Function构造函数
+//语法格式：var 变量=Function（“参数1”，“参数2”，“参数3”...,“函数体”）
+var add=new Function('a','b','return a*b');
+console.log(add(2,6));
+
+
+console.log(typeof NaN);//什么类型 number
+console.log(typeof Infinity);//number
+
+console.log(typeof Number); //function
+console.log(typeof String); //function
+console.log(typeof Boolean); //function
+console.log(typeof Object); //function
+console.log(typeof Array); //funtion
+console.log(typeof Function); //funtion
+console.log(typeof RegExp); //funtion
+console.log(typeof Error); //funtion
+//以上都是函数方法。
+console.log(typeof Math); //object
+console.log(typeof JSON);//object
+
+
+var a1 = 2;
+var a2 = "2";
+console.log(a1==a2);//true or false 原理是什么？？？？？
+console.log(a1===a2);
+//true false
+//第一个两个等号，先转换类型，然后如果是基本类型判断值是否相等，引用类型则判断是否同一个引用
+//转换类型后，基本类型，是相同值。
+//第二个三个等号，类型不同，直接false
+
+
+
+var b1 = {};
+var b2 = {};
+console.log(b1==b2);//false 原理是什么？？？？？
+console.log(b1===b2);//false
+console.log(b1===b1);//true 
+//{}是引用类型，b1和b2不是相同引用。b1和b1是相同引用，相同类型
+
+//进一步理解
+var c1 = 23;
+var c2 = new Number(23);
+console.log(c1==c2);//true 原理是什么？？？？？
+console.log(c1===c2);//false
+//第一个值是相同的，第二个三个等号，c1是基本类型，c2是引用类型。
+
+//包装对象
+var str2 = "abc";
+console.log(str2.length);
+str2.length = 1;
+console.log(str2);//原始类型变量的不可变性，指的是包装对象的改变并不影响原始类型的变量
+
+
+//typeof 与 instance
+//typeof 常用于检测基本类型的变量
+//instance 常用于检测引用类型的变量 instance左侧期望是一个对象，右侧期望是一个类型
+console.log({}instanceof Object);
+console.log([]instanceof Object);
+console.log([]instanceof Array);
+//true true true
+//{} [] []都是引用类型。
+
+
+
+console.log(2>1&&4<5);//true
+console.log(true&&(!2));//false
+console.log(false&&("2" == 2));//false
+console.log(false&&false);//false
+
+console.log(2>1||4<5);//true
+console.log(true||(!2));//true
+console.log(false||("2" == 2));//true
+console.log(false||false);//false
+
+
+console.log(1===1.0);//true
+console.log(Number("xyz"));//true
+console.log(3/0);//false
+
+
+var a = 10;
+console.log(++a);
+//11
+
+var b = 20;
+console.log(b++);
+//20
+
+//字符串链接
+var a = "abc";
+var b = "def";
+var c = a+b;
+console.log(c);
+//abcdef
+
+
+//字符串常用方法，字符串的方法源于String.prototype
+var str1 = "aaa".concat("bbb");//返回字符串
+console.log(str1);//aaabbb先连接，在返回
+var str2 = "abcdef".slice(2);
+console.log(str2);//cdef
+var str3 = "abcdef".slice(2,5);
+console.log(str3);//cde
+var str4 = "abcdef".slice(-2);
+console.log(str4);//ef
+var str5 = "abcdef".slice(2,-2);
+console.log(str5);//cd
+
+var str6 = "abcdef".split("c");//返回数组
+console.log(str6);//["ab","def"]
+var str7 = "abcdef".split("c",1);
+console.log(str7);//["ab"]
+var str8 = "abcdef".split("c",2);
+console.log(str8);//["ab","def"]
+
+var str9 = "abcdef".charAt(2);
+console.log(str9);//c
+var str10 = "abcdefabcdef".indexOf("d",1);
+console.log(str10);//3
+var str11 = "abcdefabcdef".indexOf("d",4);//从第4个开始找
+console.log(str11);//9,虽然是从第4个开始找，但是，位置是从最开始算的。
+
+var str12 = "    abc def     \r\n  ".trim();//返回已移除前导空格、尾随空格和行终止符的原始字符串
+console.log(str12);//abc def
+//substr 与 substring的区别
+var str13 = "abcdefghijklmn";
+var str14 = str13.substr(2,5);//后一个参数代表长度
+console.log(str13,str14);//str13 未受到破坏
+//abcdefghijklmn cdefg
+
+var str15 = str13.substring(2,5);//后一个参数代表第几个end
+console.log(str13,str15);//str13 未受到破坏
+//abcdefghijklmn cde
+
+
+for(var i=0;i<10;i++){
+    console.log("i:",i);
+}
+console.log("out of for:",i);//10
+
+for(var i=0;i<20;i++){
+    if(i%2==1){
+        console.log(i);
+    }else{
+        console.log("该数字位偶数");
+    }
+}
+
+
+//函数定义 注意分号
+//function 表达式。花括号后不加分号
+function max(a,b) {
+    return a>b?a:b;
+}
+console.log(max(2,3));
+
+//函数表达式，花括号后要加分号
+var min = function(a,b){
+    return a<b?a:b;
+};
+console.log(min(2,3));
+
+
+//函数参数数量问题回顾
+function f1() {
+    console.log(arguments);
+    var argArr = Array.prototype.slice.call(arguments);
+    console.log(argArr);
+}
+f1(2,3,4,"a");
+
+function f2(a,b,c,d) {
+    console.log(a,b,c,d);
+}
+f2(2,3);//参数大于实参。剩下的为undefined
+
+
+function f3() {
+    //"use strict"
+    gVar = 23;//定义了全局变量gVar，严格模式下是不允许的
+}
+
+console.log(s);//输出什么 undefined
+if(true){
+    var s = 2;
+}
+console.log(s);//输出什么  2
+
+
+//立即执行表达式 IIFE
+(function (x,y) {
+    return x>y?x:y;
+}(4,5));
+//立即执行 5
+var result = function min(x,y) {
+    return x<y?x:y;
+}(2,3);
+console.log(result);//2
+
+
+
+var obj = {
+    foo:function () {
+        console.log("foo里的this:",this);
+        function fee() {
+            //"use strict"
+            console.log("fee里的this:",this);
+        }
+        fee();
+    }
+};
+obj.foo();
+//foo是obj中的一个方法
+
+//构造函数回顾 JS面向对象具体内容 参见后续面向对象章节
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+}
+Person.prototype.showInfo = function () {
+    console.log("Hi,i'm",this.name,",i'm",this.age,"years old!");
+};
+
+var p1 = new Person("Mike",60);
+p1.showInfo();
+
+
+
+
+//字面量创建数组
+var arr1 = [2,3,"a","b"];
+console.log(arr1);
+
+//访问与改变数组
+console.log(arr1[2]);
+console.log(arr1.length);
+arr1.length-=1;
+console.log(arr1);//[2,3,"a"]
+
+//数组相关方法回顾
+///////////////////////////////
+var arr2 = ['a','b','c'];
+//var arr3 = arr2.slice(1,2);//并不破坏arr2 ['b']
+ var arr3 = arr2.slice(1);//['b','c']
+console.log(arr2);
+console.log(arr3);
+//slice从第一个参数的位置开始截取，一直截取到第二个参数的位置。如果没有第二个位置截取到最后
+
+
+var arr4 = ['m','n'];
+var pushReturn = arr4.push('o');
+console.log(pushReturn);//push后数组的长度  3
+console.log(arr4);//['m','n','o']
+
+var popReturn =arr4.pop();
+console.log(popReturn);//pop出的元素 o 删除了最后一个元素
+console.log(arr4);//['m','n']
+
+
+var arr5 = [1,2,3,4];
+var shiftReturn = arr5.shift();
+console.log(shiftReturn);//shift移除的元素  1 删除了第一个元素
+console.log(arr5);//[2,3,4]
+
+var unshiftReturn = arr5.unshift(0);
+console.log(unshiftReturn);//unshift后数组的长度  4 在开头加上unshift的元素
+console.log(arr5);//[0,2,3,4]
+
+
+var arr6 = ["ab","cd","ef"];
+console.log(arr6.indexOf("cd"));//1
+
+var joinReturn1 = arr6.join();
+console.log(joinReturn1);//ab,cd,ef
+
+var joinReturn2 = arr6.join('-');
+console.log(joinReturn2);//ab-cd-ef
+
+//批量删除元素，破坏性操作，具体参见Array章节
+var arr7 = ["x","y","z"];
+var arr8 = arr7.splice(1,1,"m");
+console.log(arr7,arr8);
+//['x','m','z'] ['y']  splice交换元素  slice截取数组
+
+//正则 参见正则章节
+
+//标准函数 console.*
+console.log("log message");
+console.error("error message");
+console.warn("warn message");
+console.assert(3>2,"assert message");//断言
+console.trace();//用于调试追踪
+
+
+
+</script>
+</html>

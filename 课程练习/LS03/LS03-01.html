@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //Number构造器属性（静态属性）
+Number.MAX_VALUE     //js可表示的最大数值
+Number.MIN_VALUE     //js可表示的最小数值
+Number.NaN           //表示非数字值
+Number.NEGATIVE_INFINITY //负无穷大，溢出时返回该值
+Number.POSITIVE_INFINITY //正无穷大，溢出时返回该值
+
+//Number原型方法(Number对象继承的方法）
+var n1 = 12345.6789;
+console.log(n1.toFixed(2));//保留两位小数12345.68
+console.log(n1.toPrecision(2));//把数字格式化为指定数字1.2e+4
+console.log(n1.toString());//转换为字符串形式12345.6789
+console.log(n1.toExponential(2));//toExponential() 方法以指数表示
+//法返回该数值字符串表示形式1.23e+4
+
+console.log(NaN === NaN);//false
+console.log(isNaN("12,3"));//true
+console.log(Math.floor(3.8));//3
+console.log(Math.floor(-3.8));//-4
+console.log(Math.ceil(3.2));//4
+console.log(Math.ceil(-3.2));//-3
+console.log(Math.round(-3.2));//-3
+console.log(Math.round(-3.5));//-3
+console.log(Math.round(-3.8));//-4
+//返回一个数字四舍五入最接近的整数
+</script>
+</html>

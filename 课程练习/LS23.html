@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="newlist"></ul>
+</body>
+<script>
+    /*
+    1.前后端的数据交互传输数据格式
+    2.作为数据存储的数据格式
+    */
+    var newlist=[
+        {"titlt":"勇士4:2火箭"},
+        {"titlt":"勇士4:2火箭"}
+    ];
+    var ulnode=document.getElementById("newlist");
+    for(var i=0;i<newlist.length;i++){
+        var linode=document.createElement("li");
+        linode.innerHTML=newlist[i]["titlt"];
+        ulnode.appendChild(linode);
+    }
+
+    // JSON.stringify(对象、数组)
+    //将js或者数组转换为JSON字符串
+    var jsonstr=JSON.stringify(newlist);
+    console.log((jsonstr));
+    console.log(typeof jsonstr);
+
+    //从JSON字符串转换成js对象的结构
+    var jsobject=JSON.parse(jsonstr);
+    console.log(jsobject);
+    console.log(typeof jsobject);
+
+
+
+    var jsobject1={
+        "username":"zhangsan",
+        "age":20,
+        "adders":{
+            "addname":"石家庄",
+            "addcode":"111222"
+        }
+    };
+    var jsobject3=JSON.stringify(jsobject1,function(k,v){
+        if(typeof v=="number"){
+            return undefined;
+        }
+        return v;
+    })
+    console.log(jsobject3);
+    var jsobject2=JSON.stringify(jsobject1,["username","age"]);
+    console.log(jsobject2);
+
+    var jsobject4=JSON.stringify(jsobject1,function(k,v){
+        console.log(k,v);
+    })
+
+
+
+
+</script>
+</html>

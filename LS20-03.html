@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        用小括号包裹的规则内容，称之为分组
+    */
+   var reg1=/(ss\d)a(\dss)/gi;
+   var str1='ss1a2ssdbaslfs';
+   /*
+        reg.exec(str)
+        如果可以匹配的，返回数组
+        如果不能匹配，返回null
+            数组结构
+            [整个正则匹配到的内容，分组匹配到的内容]
+   */
+   console.log(reg1.exec(str1));
+
+   var reg2=/(\dss)a\1/gi;//\1表示引用的是左数第一个分组
+   var reg3=/(\dss)a(\dss)/gi
+   var str2='1ssa2ssa2aadfksdv';
+   console.log(reg3.exec(str2));
+
+var reg4=/(ab){3}/gi;
+var str3='abababsdas';
+console.log(str3.replace(reg4,'x'));
+
+/*
+    String.prototype
+        var result=str.replace(正则表达式，替换成的内容)；
+        var result=str.match(正则表达式)
+        返回值result,如果匹配成功返回数组，如果匹配失败，返回的是null
+
+        var result=str.search(正则表达式)
+        返回值是匹配位置的起始索引值
+
+        RegExp.prototype
+            reg.test(str) 验证字符串是否符合正则表达式规则 ，符合返回true
+            不符合返回false
+            reg.exec(str) 匹配返回数组，不匹配返回null
+            [整个正则匹配到的内容，分组匹配到的内容，index]
+
+            reg.global表示全局
+*/
+    var reg=/\d(aa)\s/gi;
+    var str='1aa hello';
+    console.log(str.match(reg));
+
+
+    /*
+        (.*) .任意的一个字符 *表示前面的字符出现0次或多次
+        表示文件名字字符出现0次或多次
+        \. 对.做转义处理，匹配的就是.
+        ^# 必须以#开头
+        [a-fA-F0-9] []表示从给定的范围内取任意一个字符a-f A-F 0-9 
+        {6} 表示前面字符出现的次数六次
+        $ 以前面的集合中的任一字符结尾
+    */
+</script>
+</html>

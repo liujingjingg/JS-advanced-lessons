@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //正则对象的创建方式一 通过字面量直接创建
+    /*
+        正则表达式结构构成：
+            /正则表达式文本/标识符
+            [xyz]从括号中的字符中选任意一个
+            i标识符：是否忽略大小写
+            g标识符：是否全局查找
+    */
+    var reg1 = /[bcf]at/gi;//i的作用是否忽略大小写
+    var str1 ='bat cat fat Fat yfihgjv';
+    console.log(str1.match(reg1));
+
+
+
+    //正则案例 练习 查看编辑器如何使用正则
+console.log("moon2xyz".replace(/o/,"ab"));//mabon2xyz
+console.log("moon2xyz".replace(/o/g,"ab"));//mababn2xyz
+console.log("moon2 ooxyz".replace(/\bo/g,"ab"));//moon2 aboxyz   \b是空格标识符
+console.log("moon2xyz".replace(/\dx/,"_"));//moon_yz
+console.log("moon2xyz".replace(/[xyz]/g,"ab"));//moon2ababab
+console.log("m2on2x2z".replace(/\d[zo]/g,"ab"));//mabn2xab
+console.log("m2on2x2z".replace(/2[x-z]/g,""));//m2on
+
+    //正则对象的创建方式二 通过RegExp构造函数来实例化正则对象
+    var reg2 = new RegExp(/[bcf]at/,"gi");//常见形式
+    var reg3 = new RegExp("[bcf]at","gi");
+    console.log("a fAt bat ,a faT cat".match(reg1));//["fAt", "bat", "faT", "cat"]
+    console.log("a fAt bat ,a faT cat".match(reg2));//["fAt", "bat", "faT", "cat"]
+    console.log("a fAt bat ,a faT cat".match(reg3));//["fAt", "bat", "faT", "cat"]
+
+    var reg4=/ab/gi;
+    var str2='absdcslk';
+    console.log(str2.replace(reg4,'x'));
+
+    /*
+        字符分类
+            \d:匹配阿拉伯数字[0-9]
+            \D:不是一个阿拉伯数字[^0-9]
+            \w:匹配所有的数字、字母、下划线
+            \W:不是所有的数字、字母、下划线
+            \s：匹配空白符，空格可以是space、制表符
+            \S:不是所有的空白符
+    */
+   var reg5=/a\d/gi;
+   var str3='a1dsdsa2ccv';
+   console.log(str3.replace(reg5,'x'));
+
+   var reg6=/a\D/gi;
+   var str4='a1asdsa2cav';
+   console.log(str4.replace(reg6,'x'));
+
+   var reg7=/a\w/gi;
+   var str5='a1asdsa2cav';
+   console.log(str5.replace(reg7,'x'));
+
+
+   var reg8=/\sa\d/gi;
+   var str6='a1 a3a4a5';
+   console.log(str6.replace(reg8,'x'));
+
+
+   var reg9=/[abc]\d/gi;
+   var str7='a1b2c3ssdfsd';
+   console.log(str7.replace(reg9,'x'));
+
+
+   var re1=/[abc][0-9]/gi;
+   var str8='a1b2c3dfsd';
+   console.log(str8.replace(re1,'x'));
+
+
+   var re2=/[^0-9]/gi;
+   var str9='a1b2c3dfsd';
+   console.log(str9.replace(re2,'x'));
+
+   /*
+    匹配开头是数字，第一个字符是[a-f],第三个数字是空格
+   */
+ 
+  console.log('2a 3a dfsdfsdv'.replace(/\d[a-f]\s/gi,'x'));
+  //^以...开头   ……^m以m开头的字符串匹配
+  var re3=/^a\d/gi;
+  var sr1='a1dsdca2a3';
+  console.log(sr1.replace(re3,'x'));
+  
+
+
+//$以...结尾匹配成功  n$<以n结尾的字符串匹配
+  var re4=/a\d$/gi;
+  var sr2='a1dsdca2a3';
+  console.log(sr2.replace(re4,'x'));
+
+  /*
+    数量词：
+        m?:表示m出现0次，或一次。
+        n+:表示n出现一次或多次。
+        p(m,n):p至少出现m次，至多出现n次。
+  */
+  var re5=/a?bcd/gi;
+  var sr3='abcd bcd aabcd abbcd';
+  console.log(sr3.replace(re5,'x'));
+
+
+  var re6=/a+bcd/gi;
+  var sr4='abcd bcd aabcd aaabcd';
+  console.log(sr4.replace(re6,'x'));
+
+//match() 方法检索返回一个字符串匹配正则表达式的的结果。
+var regExp = /ab/i;
+var matchResult = "xxAbcaaBbxyz".match(regExp);
+console.log(matchResult);
+/*
+  Array(1)
+  0: "Ab"
+  groups: undefined
+  index: 2
+  input: "xxAbcaaBbxyz"
+  length: 1
+  __proto__: Array(0)
+*/
+
+var regExp = /ab/gi;
+var matchResult = "xxAbcaaBbxyz".match(regExp);
+console.log(matchResult);
+/*
+  Array(2)
+  0: "Ab"
+  1: "aB"
+  length: 2
+  __proto__: Array(0)
+*/
+
+var regExp = /a*b/gi; // 参见在线分析工具 https://regexper.com或https://jex.im/regulex
+var matchResult = "xxAbcaaBbxyz".match(regExp);
+console.log(matchResult);
+//["Ab", "aaB", "b"]   a*b表示有几个a都可以，但是必须要有一个b
+
+
+var regExp = /a.b/gi;//参见在线分析工具 https://regexper.com或https://jex.im/regulex
+var matchResult = "xxAbcaBbxyz".match(regExp);
+console.log(matchResult);
+//["aaB"]  a.b中a必须有b必须有两个或两个 以上
+
+//test初步了解
+var regExp = /a/i;
+console.log(regExp.test("ab"));
+console.log(regExp.test("absdfs"));
+//test判断字符串中是否含有regExp中的字符串
+
+var regExp = /a/gi;
+console.log(regExp.test("ab"));//true lastIndex is 0
+console.log(regExp.test("ab"));//false lastIndex is now 2
+console.log(regExp.test("ab"));//true
+console.log(regExp.test("ab"));//false 
+/*
+  如果正则表达式设置了全局标志，test() 的执行会改变正则表达式   lastIndex属性。
+  连续的执行test()方法，后续的执行将会从 lastIndex 处开始匹配字符串
+*/
+
+// 匹配一个词的边界 \b 一个词的边界就是一个词不被另外一个词跟随的位置或者不是另一个词汇字符前边的位置。
+// 注意:一个匹配的词的边界并不包含在匹配的内容中。
+console.log(/oo/.test("moon"));//true
+console.log(/oo\b/.test("moon"));//false 不是边界
+console.log(/oon\b/.test("moon"));//true
+console.log(/\boo/.test("moon"));//true
+
+console.log("moon".search(/oo/));//1
+console.log("moon".search(/oo\b/));//-1
+console.log("moon".search(/oon\b/));//1
+console.log("moon".search(/\boo\b/));//-1
+
+
+//匹配一个非单词边界 \B 他匹配一个前后字符都是相同类型的位置：都是单词或者都不是单词。
+//一个字符串的开始和结尾都被认为是非单词。
+console.log(/oo\B/.test("moon"));//true
+console.log(/oon\B/.test("moon"));//false
+console.log(/oo\B/.test("moon"));//true
+console.log(/\Boo\B/.test("moon"));//true
+
+
+console.log("moon".match(/oo\B/));//["oo", index: 1, input: "moon"]
+console.log("moonoonxoo".match(/oo\B/));//["oo", index: 1, input: "moonoonxoo"]
+console.log("moon".match(/oon\B/));//null
+console.log("moo".match(/\Boo\B/));//null
+
+
+//范围类
+console.log("12345667".replace(/[3-9]/gi,"X"));
+console.log("absxsdfe123Ab".replace(/[a-f1-9]/gi,"X"));
+console.log("absxsdfe123Ab".replace(/[a-f][1-9]/gi,"X"));//如果单独替换，则需要分组，见后续
+console.log("absxsdfe1Q2e3Ab".replace(/[a-f][1-9][A-Z]/gi,"X"));
+/*
+  12XXXXXX
+ XXsxsXXXXXXXX
+ absxsdfX23Ab
+ absxsdfX2Xb    [][][]必须同时满足三个括号里的条件
+*/
+
+console.log("2017-10-23".replace(/[0-9]/g,"X"));//XXXX-XX-XX
+console.log("2017-10-23".replace(/[0-9-]/g,"X"));//XXXXXXXXXX
+
+
+//关于 . 除了回车和换行符之外的所有字符
+/ab[0-9][^\r\n]/ //等效于/[ab\d.]/
+console.log("@abc@123@".replace(/@./g,"Q"));//QbcQ23@
+console.log("@abc@123@".replace(/.@/g,"Q"));//@abQ12Q
+
+console.log("This is a Boy is".replace(/is/g,0));
+console.log("This is a Boy is".replace(/^is/g,0));
+console.log("This is a Boy is".replace(/is$/g,0));
+console.log("This is a Boy is".replace(/is\b/g,0));
+console.log("This is a Boy is".replace(/is\B/g,0));
+console.log("This is a Boy is".replace(/\bis/g,0));
+console.log("This is a Boy is".replace(/\Bis/g,0));
+/*
+ Th0 0 a Boy 0
+ This is a Boy is
+ This is a Boy 0
+ Th0 0 a Boy 0
+ This is a Boy is
+ This 0 a Boy 0
+ Th0 is a Boy is
+*/
+
+</script>
+</html>

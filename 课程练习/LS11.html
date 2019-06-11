@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .container{
+            width: 400px;
+            height: 300px;
+            margin: 0 auto;
+            border: 3px solid red;
+        }
+        .tabs>span{
+            float: left;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+        .contents{
+            clear: both;
+        }
+        .contents>div{
+            height: 250px;
+            line-height: 250px;
+            font-size: 50px;
+            text-align: center;
+            display: none;
+        }
+        .contents>.show{
+            display: block;
+        }
+        .active{
+            background-color: #cdcdcd;
+        }
+    </style>
+</head>
+<body>
+        <div class="container">
+                <div class="tabs">
+                    <span class="active">导航0</span>
+                    <span>导航1</span>
+                    <span>导航2</span>
+                    <span>导航3</span>
+                </div>
+                <div class="contents">
+                    <div class="show">导航0内容</div>
+                </div>
+            </div>
+</body>
+<script>
+    //立即执行表达式 常见形式
+(function max( x,y){
+    console.log("the max is",x>y?x:y);
+})(2,3);
+
+(function (x,y){ //可以没有函数名
+    console.log("the min is",x<y?x:y);
+})(2,3);
+
+//注意：IIFE是表达式，要注意使用分号结尾，否则可能出现错误
+(function() {
+    console.log("111");
+})();//没有分号的话会报错
+(function a() {
+    console.log("222");
+})()//在括号里面外面都可以
+
+
+// 其他形式的IIFE 与运算符结合的写法
+var i = function(){
+    return 10;
+}(); //i为10
+console.log(i);//10
+
+true && function(a,b){
+    return a>b?a:b;
+}(5,9);
+console.log((5,9));//9
+
+
+!function(x,y){
+    console.log(x===y?true:false); // === 返回什么false  ==返回true
+}("5",5);
+
+ !function(){console.log(2); }();//2
+ !function(){console.log(0); }();//0
+
+//文件内的变量污染问题,尤其是异步执行的情况下
+var userId = 123;
+document.onclick = function () {
+    console.log("userId = ",userId);
+    //alert("userId = "+userId);
+};
+
+//一长串代码后，假如看不见上述代码了
+(function () {
+    var a=2,b=3;
+    if(a<b){
+        var userId = 234;
+    }
+}());
+
+
+(function () {  // IIFE开始
+    var x = 10;
+    document.onclick = function () {
+        // console.log("x = ",x);
+        alert("x = "+x);//10
+    };
+})(); 
+
+//如何避免全局污染，使用IIFE函数立即执行表达式 JS文件2中的代码
+(function () {  // IIFE开始
+    var x = 20;
+    console.log(x);
+})();           // IIFE结束
+
+function nameSpace() {
+    var x = 30;
+    console.log(x);
+}
+nameSpace();
+//当用TTFE函数立即执行表达式时，变量的作用域范围就在函数里
+
+
+//由于ES5没有块作用域，即使写成如下形式依然有问题
+if(true){
+    var x = 40;
+    console.log(x);
+}
+
+//ES5作用域 与 变量共享问题
+//查看Scope窗体中getNumFuncs中每一个函数的内部属性[[Scopes]]中的第0个元素闭包中的变量，看是否存在共享问题
+function f(){
+    var getNumFuncs = [];//函数数组
+    for(var i=0;i<10;i++){
+        getNumFuncs[i] = function(){
+            return i;
+        };
+    }
+    return getNumFuncs;//设置断点，查看变量共享问题
+}
+var tmp = f();
+tmp[3]();//tmp[0]()...tmp[9]()都10
+
+//解决办法
+function f(){
+    var getNumFuncs = [];//函数数组
+    for(var i=0;i<10;i++){
+        (function (j) {
+            getNumFuncs[j] = function(){return j;};
+        })(i);
+    }
+    return getNumFuncs;//设置断点，查看变量共享问题
+}
+var tmp = f();
+console.log(tmp[3]());//3
+
+
+//局部变量的案例
+function f1(){
+    var getNumFunc = [];//函数数组
+    var j;
+    for(var i=0;i<10;i++){
+        j = i;
+        getNumFunc[i] = function(){
+            return j;//如果return i;的话输出10
+        };
+    }
+    return getNumFunc;//设置断点，查看变量共享问题
+}
+var tmps = f1();
+console.log(tmps[3]());//tmp[0]()...tmp[9]()都为9
+
+
+//避免闭包中非期望的变量共享问题，如下例子
+var tabs = document.getElementsByClassName('tabs')[0].children;
+var contents = document.getElementsByClassName('show')[0];
+
+for(var i=0;i<tabs.length;i++) {
+        tabs[i].onclick=function(){
+            for (var j = 0; j < tabs.length; j++) {
+                tabs[j].className = '';
+            }
+            this.className = "active";
+            contents.innerHTML = "导航" + i + "内容";
+        };
+
+}
+
+//解决方案 IIFE 重新打开index09.html页面测试
+var tabs = document.getElementsByClassName('tabs')[0].children;
+var contents = document.getElementsByClassName('show')[0];
+
+for(var i=0;i<tabs.length;i++) {
+    (function (i) { 	//IIFE start
+        tabs[i].onclick=function(){
+            for (var j = 0; j < tabs.length; j++) {
+                tabs[j].className = '';
+            }
+            this.className = "active";
+            contents.innerHTML = "导航" + i + "内容";
+        };
+    }(i));		
+}
+
+
+//变量共享问题
+// for (var i = 0; i < 5; i++) {
+//     setTimeout(function() {
+//         console.log(new Date, i);
+//     }, 1000*i);
+// }
+// console.log("i：",i);
+
+
+//通过IIFE解决变量共享问题
+for (var i = 0; i < 5; i++) {
+    (function(j) {  // j = i
+        setTimeout(function() {
+            console.log(new Date,j);
+        }, 1000*j);
+    })(i);
+}
+console.log("i：",i);
+
+var max = 10;
+var fn = function (x) {
+    if(x > max){
+        console.log(x);
+    }
+};
+(function (f) {
+    var max = 10;
+    f(15);
+})(fn);
+</script>
+</html>

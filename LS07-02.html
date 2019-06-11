@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //实参数大于形参数
+function test() {
+    console.log(arguments);
+    console.log(test.arguments==arguments,arguments);
+    console.log(arguments.length);//2
+	console.log(typeof arguments);//object
+	console.log(arguments instanceof Array);//false
+	console.log(arguments instanceof Object);//true
+    console.log(Array.prototype.slice.call(arguments));
+    var s = "";
+    for (var i = 0; i < arguments.length; i++) {
+        s += arguments[i];
+    }
+    return s;
+}
+test("hello,", "world!");//"hello,world!"
+
+//实参数小于形参数
+var sum = function(a,b,c){
+    b = b||4;
+    c = c||5;
+    return a+b+c;
+};
+console.log(sum(1,2,3));//6
+console.log(sum(1,2));//8
+console.log(sum(1));//10
+
+
+
+//值传递
+var a = 1;
+function foo(x) {
+    console.trace("a:",a," x:",x);//a:1  x:1
+    x = 2;//step 2222
+    console.trace("a:",a," x:",x);//a:1  x:2
+}
+
+console.trace("a:",a);//a:1
+foo(a);// step 1111
+console.trace("a:",a); // step 4444  a仍为1
+
+
+
+//引用传递
+var obj = {x:1};
+function fee(o){
+    console.trace("obj.x :",obj.x," o.x :",o.x);//1   1
+    o.x = 3;// step 2222
+    console.trace("obj.x :",obj.x," o.x :",o.x);// 3   3
+}
+
+console.trace("obj.x :",obj.x);//1
+fee(obj);// step 1111
+console.trace("obj.x :",obj.x);//  obj.x被改写为3
+
+//打开index.html 学习chrome的Sources调试
+document.onclick = function () {//测试Event Listener Breakpoints
+    alert("click");
+    //var body =  document.getElementsByName("body");
+};
+</script>
+</html>
